@@ -1,13 +1,14 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en" class="no-js no-intro">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ashwin &amp; Joshith — Websites for Local Businesses</title>
-<meta name="description" content="Ashwin and Joshith design and build distinctive websites for local businesses. Meet the team and get in touch.">
+<title>VelocityCore — Websites for Local Businesses</title>
+<meta name="description" content="VelocityCore designs and builds distinctive websites for local businesses. Design. Develop. Deliver. Meet the team and get in touch.">
 <meta name="theme-color" content="#e3241b">
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
 <meta property="og:type" content="website">
-<meta property="og:title" content="Ashwin &amp; Joshith — Websites for Local Businesses">
+<meta property="og:title" content="VelocityCore — Websites for Local Businesses">
 <meta property="og:description" content="We design and build distinctive websites for local businesses, considered from the first click to the final detail.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e3241b'/%3E%3Ctext x='32' y='45' font-size='34' font-family='Arial Black,Arial,sans-serif' font-weight='900' text-anchor='middle' fill='%230f0c0c'%3EAJ%3C/text%3E%3C/svg%3E">
 <script>
@@ -38,7 +39,7 @@ html { -webkit-text-size-adjust:100%; }
 html.lenis, html.lenis body { height:auto; }
 .lenis.lenis-smooth { scroll-behavior:auto !important; }
 html.locked { overflow:hidden; height:100%; }
-body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-sans); overflow-x:hidden; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-sans); overflow-x:hidden; overflow-x:clip; }
 a { color:inherit; text-decoration:none; }
 ul,ol,dl,dd { margin:0; padding:0; list-style:none; }
 h1,h2,h3,p { margin:0; font-weight:inherit; }
@@ -104,13 +105,24 @@ button { background:none; border:0; cursor:pointer; }
 @keyframes bob { 0%,100% { translate:0 0; } 50% { translate:0 -3px; } }
 @media (max-width:639px) { .intro-hint { bottom:4.8rem; } .skip { left:50%; right:auto; translate:-50% 0; bottom:1.4rem; } }
 html.no-js .intro, html.no-js .skip { display:none; }
-@media (prefers-reduced-motion:reduce) { .intro { display:none; } .hero { margin-top:0 !important; } }
+@media (prefers-reduced-motion:reduce) { .intro { display:none; } .hero-hold { margin-top:0 !important; height:auto !important; } .hero { position:relative !important; } }
 
-.hero { position:relative; min-height:100svh; background:var(--red); overflow:hidden; isolation:isolate; display:flex; flex-direction:column; margin-top:-100svh; }
-html.no-js .hero { margin-top:0; }
+/* the homepage stays pinned for an extra 90% of a screen so people can take it in before the page moves on */
+.hero-hold { position:relative; height:190svh; margin-top:-100svh; }
+.hero { position:sticky; top:0; min-height:100svh; background:var(--red); overflow:hidden; isolation:isolate; display:flex; flex-direction:column; }
+html.no-js .hero-hold { margin-top:0; height:auto; }
+html.no-intro .intro { display:none; }                       /* the version without the two teens: start straight on the homepage */
+html.no-intro .hero-hold { margin-top:0; }
+html.no-js .hero { position:relative; }
+
+/* the glass companion: one object that follows you down the page and changes shape */
+#gfx { position:fixed; left:0; top:0; width:100vw; height:100vh; z-index:6; pointer-events:none; overflow:visible; display:none; }
+#gl3d { position:fixed; left:0; top:0; width:100vw; height:100vh; z-index:6; pointer-events:none; display:none; }   /* the real 3D mouse */
+html.fx .glass { visibility:hidden; }
 .swirl { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 .mast { position:relative; z-index:6; display:flex; align-items:center; justify-content:space-between; padding:1.5rem var(--gut); }
 .logo { font-family:var(--font-display); font-weight:900; font-stretch:88%; font-size:1.35rem; text-transform:uppercase; letter-spacing:-.02em; line-height:1; }
+.logo .core { color:var(--paper); }
 .nav { display:none; position:absolute; left:50%; transform:translateX(-50%); }
 .nav ul { display:flex; gap:3.5rem; }
 .nav a, .garage { font-family:var(--font-mono); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; transition:color 150ms var(--ease); }
@@ -138,9 +150,9 @@ html.no-js .hero { margin-top:0; }
 .hero.on-name { cursor:none; }
 .discs { position:absolute; inset:0; width:100%; height:100%; overflow:visible; fill:var(--ink); }
 .wm.red { position:absolute; inset:0; margin:0; color:var(--red); clip-path:circle(0px); }
-.wm { position:relative; margin:0; padding-inline:var(--gut); font-family:var(--font-display); font-weight:900; font-stretch:84%; text-transform:uppercase; line-height:.82; letter-spacing:-.045em; font-size:min(14.2vw, 27svh); color:var(--ink); display:flex; flex-direction:column; pointer-events:none; }
-.wm .l2 { align-self:flex-end; }
-@media (max-width:639px) { .wm { font-size:15vw; } }
+.wm { position:relative; margin:0; padding-inline:var(--gut); font-family:var(--font-display); font-weight:900; font-stretch:84%; text-transform:uppercase; line-height:.82; letter-spacing:-.045em; font-size:min(11.6vw, 19.5svh); color:var(--ink); display:flex; flex-direction:column; pointer-events:none; }
+.wm .l2 { margin-left:7vw; }
+@media (max-width:639px) { .wm { font-size:16vw; } }
 .wm .tr { column-gap:.12em; }
 
 .glass { position:absolute; z-index:5; right:5%; top:13%; width:min(22vw, 21rem); pointer-events:none; perspective:1000px; }
@@ -274,14 +286,14 @@ main { position:relative; }
 <body>
 <!-- Search this file for "EDIT:" to find every placeholder (bios, roles, stats, contact details). -->
 
-<div class="veil" id="veil" role="status" aria-label="Loading Ashwin and Joshith">
-  <div class="veil-mark" aria-hidden="true">A&amp;J<span class="fill">A&amp;J</span></div>
-  <div class="veil-name mono" aria-hidden="true">ashwin &amp; joshith</div>
+<div class="veil" id="veil" role="status" aria-label="Loading VelocityCore">
+  <div class="veil-mark" aria-hidden="true">VC<span class="fill">VC</span></div>
+  <div class="veil-name mono" aria-hidden="true">velocitycore</div>
   <div class="veil-meter"><i></i></div>
 </div>
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
-  <div class="sheet-top"><span class="logo">Ashwin &amp; Joshith</span><button class="sheet-close" id="sheet-close" type="button" aria-label="Close menu"><span></span><span></span></button></div>
+  <div class="sheet-top"><span class="logo">Velocity<span class="core">Core</span></span><button class="sheet-close" id="sheet-close" type="button" aria-label="Close menu"><span></span><span></span></button></div>
   <nav aria-label="Menu"><ul id="sheet-nav"></ul></nav>
 </div>
 
@@ -299,6 +311,7 @@ main { position:relative; }
 </section>
 
 <!-- ═════════ 1 · HERO ═════════ -->
+<div class="hero-hold">
 <section class="hero" id="home" aria-labelledby="hero-title">
   <svg class="swirl" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs><pattern id="chk" width="76" height="76" patternUnits="userSpaceOnUse"><rect width="76" height="76" fill="#c41a12"/><rect width="38" height="38" fill="#a8110b"/><rect x="38" y="38" width="38" height="38" fill="#a8110b"/></pattern></defs>
@@ -306,7 +319,7 @@ main { position:relative; }
   </svg>
 
   <header class="mast rise" id="masthead">
-    <a href="#home" class="logo" aria-label="Ashwin and Joshith, home">Ashwin &amp; Joshith</a>
+    <a href="#home" class="logo" aria-label="VelocityCore, home">Velocity<span class="core">Core</span></a>
     <nav class="nav" aria-label="Primary"><ul id="main-nav"></ul></nav>
     <a class="garage" href="#contact"><span aria-hidden="true">[ </span>Let’s talk<span aria-hidden="true"> → ]</span></a>
     <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-haspopup="dialog"><span></span><span></span></button>
@@ -314,14 +327,14 @@ main { position:relative; }
 
   <div class="tag-row rise" style="--d:.3s">
     <p class="mono">Web design &amp; development · local businesses</p>
-    <p class="mono hint">Hover over our names.</p>
+    <p class="mono hint">Hover over the words.</p>
   </div>
 
-  <h1 class="sr" id="hero-title">Ashwin and Joshith — websites for local businesses</h1>
+  <h1 class="sr" id="hero-title">VelocityCore: Design. Develop. Deliver. Websites for local businesses</h1>
   <div class="wmwrap" id="wmwrap" aria-hidden="true">
     <svg class="discs" id="discs" aria-hidden="true"></svg>
-    <p class="wm"><span class="l1" id="wm1"></span><span class="l2" id="wm2"></span></p>
-    <p class="wm red" id="wmred"><span class="l1" id="wm1r"></span><span class="l2" id="wm2r"></span></p>
+    <p class="wm"><span class="l1" id="wm1"></span><span class="l2" id="wm2"></span><span class="l3" id="wm3"></span></p>
+    <p class="wm red" id="wmred"><span class="l1" id="wm1r"></span><span class="l2" id="wm2r"></span><span class="l3" id="wm3r"></span></p>
   </div>
 
   <!-- original artwork: a glass browser window that tilts toward your cursor -->
@@ -365,9 +378,14 @@ main { position:relative; }
   <p class="mono ticker rise" style="--d:1.2s">design / build / launch</p>
   <p class="mono scroll rise" style="--d:1.2s">scroll to discover ↓</p>
 </section>
+</div>
 
 <!-- brush stroke that follows you down the page -->
 <svg class="brush" id="brush" aria-hidden="true"></svg>
+
+<!-- glass companion: window > three people > mouse > key > phone > contact page -->
+<svg id="gfx" aria-hidden="true" focusable="false"></svg>
+<canvas id="gl3d" aria-hidden="true"></canvas>
 
 <!-- ═════════ 2 · ABOUT ═════════ -->
 <section class="sec paper" id="about" data-brush="#e3241b" data-carry="#e3241b" aria-labelledby="about-title">
@@ -382,17 +400,17 @@ main { position:relative; }
         <span class="ltr" aria-hidden="true">A</span>
         <p class="mono">founder_01</p>
         <h3 class="giant">Ashwin</h3>
-        <p class="mono role">EDIT: role · e.g. design &amp; front-end</p>
-        <p class="bio">EDIT: a short, honest line about Ashwin: what he’s into, what he’s good at, and why he loves building for local shops.</p>
-        <ul class="chips"><li>EDIT: skill</li><li>EDIT: skill</li><li>EDIT: skill</li></ul>
+        <p class="mono role">front end &amp; deployment</p>
+        <p class="bio">Ashwin is our front-end developer. He’s great at building the part of the site people actually see and use, and at getting it deployed quickly. He thinks problems through carefully and keeps up with what’s working across the industry, so what we ship is fast, clean and ready to go live.</p>
+        <ul class="chips"><li>Front end</li><li>Critical thinking</li><li>Industry knowledge</li></ul>
       </article>
       <article class="pcard j rise" style="--d:.12s" data-corners>
         <span class="ltr" aria-hidden="true">J</span>
         <p class="mono">founder_02</p>
         <h3 class="giant">Joshith</h3>
-        <p class="mono role">EDIT: role · e.g. content &amp; client care</p>
-        <p class="bio">EDIT: a short, honest line about Joshith: what he’s into, what he’s good at, and what clients can expect when they work with him.</p>
-        <ul class="chips"><li>EDIT: skill</li><li>EDIT: skill</li><li>EDIT: skill</li></ul>
+        <p class="mono role">clients &amp; planning</p>
+        <p class="bio">Joshith looks after our clients. He’s great at handling people and loves to negotiate, so everyone ends up with a deal that works. He’s strong on time management and on planning ideas before they’re built, which keeps every project on schedule and everyone clear on what happens next.</p>
+        <ul class="chips"><li>Client relations</li><li>Negotiation</li><li>Planning &amp; time management</li></ul>
       </article>
     </div>
   </div>
@@ -423,7 +441,7 @@ main { position:relative; }
 <section class="footer" id="contact" aria-labelledby="foot-head">
   <div class="foot-panel">
     <canvas id="foot-contour" aria-hidden="true"></canvas>
-    <div class="foot-logo">Ashwin &amp; Joshith</div>
+    <div class="foot-logo">Velocity<span style="color:var(--paper)">Core</span></div>
     <h2 class="giant foot-head" id="foot-head"></h2>
     <nav class="foot-nav" aria-label="Footer"><ul id="foot-nav"></ul></nav>
 
@@ -449,7 +467,7 @@ main { position:relative; }
       <li><a href="mailto:ash3in@gmail.com,joshith.uppalapati@gmail.com" id="mail-link">email us</a></li>
       <li><a href="tel:+000000000">EDIT: phone</a></li>
     </ul>
-    <p class="foot-copy mono rise">© <span id="yr">2026</span> Ashwin &amp; Joshith. Websites for local businesses.</p>
+    <p class="foot-copy mono rise">© <span id="yr">2026</span> VelocityCore. Websites for local businesses.</p>
   </div>
 </section>
 </main>
@@ -476,24 +494,6 @@ const SERVICES = [
   { n: "04", title: "Launch", tone: "paper", obj: "pin", copy: "We put you live, help you show up on Google, and stay on hand afterwards when something needs changing.", chips: ["go live", "local search", "support"] },
 ];
 const PROCESS = [["Step 1", "Chat", "We learn about you and what you need."], ["Step 2", "Design", "You see a look you love before we build."], ["Step 3", "Build", "Fast, responsive and easy to use."], ["Step 4", "Launch", "Go live, and we stay on hand after."]];
-
-// original artwork for each service
-const OBJ = {
-  palette: `<svg viewBox="0 0 300 260"><defs><linearGradient id="pa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#cfd8de"/></linearGradient></defs>
-    <g transform="rotate(-10 150 130)"><rect x="20" y="40" width="170" height="190" rx="18" fill="#e3241b"/><rect x="60" y="20" width="170" height="190" rx="18" fill="url(#pa)" stroke="#fff" stroke-width="2"/><rect x="100" y="50" width="170" height="190" rx="18" fill="#6fd3f7" opacity=".92"/></g>
-    <circle cx="86" cy="86" r="16" fill="#0f0c0c"/><circle cx="130" cy="86" r="16" fill="#e3241b"/><circle cx="174" cy="86" r="16" fill="#6fd3f7"/><rect x="72" y="128" width="130" height="10" rx="5" fill="#0f0c0c" opacity=".7"/><rect x="72" y="150" width="96" height="10" rx="5" fill="#0f0c0c" opacity=".35"/></svg>`,
-  chip: `<svg viewBox="0 0 300 260"><defs><linearGradient id="ch" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#b9c4cc"/></linearGradient></defs>
-    <g stroke="#0f0c0c" stroke-width="10" stroke-linecap="round">${[70,105,140,175,210].map((v)=>`<path d="M${v+0} 40V70M${v} 190V220M50 ${v-15+30}H80M220 ${v-15+30}H250"/>`).join("")}</g>
-    <rect x="70" y="60" width="160" height="140" rx="20" fill="url(#ch)" stroke="#0f0c0c" stroke-width="6"/><rect x="92" y="82" width="116" height="96" rx="10" fill="#0f0c0c"/>
-    <text x="150" y="146" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="500" font-size="40" fill="#6fd3f7">&lt;/&gt;</text></svg>`,
-  phone: `<svg viewBox="0 0 300 300"><defs><linearGradient id="ph" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b2424"/><stop offset="1" stop-color="#0f0c0c"/></linearGradient></defs>
-    <rect x="86" y="14" width="128" height="272" rx="26" fill="url(#ph)" stroke="#fff" stroke-opacity=".7" stroke-width="3"/><rect x="98" y="30" width="104" height="240" rx="16" fill="#f8f4f0"/><rect x="132" y="38" width="36" height="8" rx="4" fill="#0f0c0c"/>
-    <rect x="108" y="58" width="84" height="46" rx="8" fill="#e3241b"/><rect x="108" y="114" width="60" height="9" rx="4" fill="#0f0c0c"/><rect x="108" y="130" width="84" height="7" rx="3" fill="#0f0c0c" opacity=".35"/><rect x="108" y="144" width="70" height="7" rx="3" fill="#0f0c0c" opacity=".35"/>
-    <rect x="108" y="168" width="84" height="30" rx="15" fill="#6fd3f7"/><rect x="108" y="208" width="38" height="46" rx="8" fill="#0f0c0c"/><rect x="154" y="208" width="38" height="46" rx="8" fill="#e3241b"/></svg>`,
-  pin: `<svg viewBox="0 0 300 300"><defs><linearGradient id="pn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5a4d"/><stop offset="1" stop-color="#a8110b"/></linearGradient></defs>
-    <ellipse cx="150" cy="268" rx="70" ry="14" fill="#0f0c0c" opacity=".25"/><path d="M150 14c-52 0-90 38-90 88 0 66 90 164 90 164s90-98 90-164c0-50-38-88-90-88z" fill="url(#pn)" stroke="#0f0c0c" stroke-width="6"/>
-    <circle cx="150" cy="102" r="36" fill="#f8f4f0" stroke="#0f0c0c" stroke-width="6"/><path d="M134 104l12 12 22-26" fill="none" stroke="#0f0c0c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-};
 
 // ═══════════════════════════════════════════════════════════════════
 // helpers
@@ -557,8 +557,8 @@ $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
 // ═══════════════════════════════════════════════════════════════════
 // hero
 // ═══════════════════════════════════════════════════════════════════
-words($("#wm1"), "ashwin", { st: 90 }); words($("#wm2"), "& joshith", { st: 90 });
-words($("#wm1r"), "ashwin", { st: 90 }); words($("#wm2r"), "& joshith", { st: 90 });   // red copy, revealed inside the circle
+words($("#wm1"), "design.", { st: 90 }); words($("#wm2"), "develop.", { st: 90 }); words($("#wm3"), "deliver.", { st: 90 });
+words($("#wm1r"), "design.", { st: 90 }); words($("#wm2r"), "develop.", { st: 90 }); words($("#wm3r"), "deliver.", { st: 90 });   // red copy, revealed inside the circle
 words($("#lead1"), "Websites that feel local.", { st: 70 }); $("#lead1").style.display = "flex"; $("#lead1").style.setProperty("--d", "500ms");
 $$("[data-corners]").forEach((p) => p.insertAdjacentHTML("beforeend", ["tr", "tl", "bl", "br"].map((c) => `<svg class="corner ${c}" viewBox="0 0 10 10" aria-hidden="true"><path d="M0 .5H9.5V10"/></svg>`).join("")));
 const hero = $(".hero");
@@ -571,19 +571,12 @@ document.documentElement.classList.add("locked");
 function lift() {
   if (veil.classList.contains("done")) return;
   veil.classList.add("done"); document.documentElement.classList.remove("locked");
-  ready = true; document.body.classList.add("ready"); if (REDUCED) hero.classList.add("in");   // otherwise the hero's entrance plays when the zoom lands
+  ready = true; document.body.classList.add("ready"); if (REDUCED || !$("#intro").offsetHeight) hero.classList.add("in");   // otherwise the hero's entrance plays when the zoom lands
   watchers.forEach(([o, el]) => { o.unobserve(el); o.observe(el); });
 }
 const minWait = new Promise((r) => setTimeout(r, REDUCED ? 0 : 1700));
 Promise.all([minWait, document.fonts ? document.fonts.ready : 0, new Promise((r) => (document.readyState === "complete" ? r() : addEventListener("load", r)))]).then(lift);
 setTimeout(lift, 5000);
-
-// glass window tilts toward the cursor
-const gl = $("#gl");
-if (!REDUCED) hero.addEventListener("pointermove", (e) => {
-  const r = hero.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
-  gl.style.setProperty("--ry", (-16 + nx * 26) + "deg"); gl.style.setProperty("--rx", (8 - ny * 22) + "deg");
-});
 
 // one medium circle follows the cursor, only over the big names; the letters inside it turn red
 const wmwrap = $("#wmwrap"), discs = $("#discs"), wmred = $("#wmred");
@@ -660,7 +653,7 @@ SERVICES.forEach((s, i) => {
         <p class="copy rise" style="--d:.5s">${s.copy}</p>
         <ul class="chips rise" style="--d:.6s">${s.chips.map((c) => `<li>${c}</li>`).join("")}</ul>
       </div>
-      <div class="art" aria-hidden="true"><span class="num">${s.n}</span><div class="obj" style="animation-delay:${-i * 1.3}s">${OBJ[s.obj]}</div></div>
+      <div class="art" aria-hidden="true"><span class="num">${s.n}</span></div>
     </div></div>`;
   svcList.append(sec);
   words($(`#svc-t-${i}`), s.title, { st: 80 }); $(`#svc-t-${i}`).style.display = "flex";
@@ -768,8 +761,7 @@ function buildBrush() {
   const secs = $$("[data-brush]");
   brush.setAttribute("viewBox", `0 0 ${W} ${H}`); brush.setAttribute("width", W); brush.setAttribute("height", H); brush.style.height = H + "px";
   const rel = (el) => { const r = el.getBoundingClientRect(); return [r.top + scrollY - mainTop, r.height]; };
-  const [heroTop, heroH] = rel(hero);
-  const pts = [[W * .8, heroTop + heroH - 40]];
+  const pts = [[W * .8, rel($("#about"))[0] - 40]];
   secs.forEach((s, i) => { const [t, h] = rel(s); pts.push([i % 2 ? W * (W < 700 ? .85 : .88) : W * (W < 700 ? .15 : .12), t + h * .5]); });
   const [ct] = rel($("#contact")); pts.push([W * .5, ct - 20]);
   // Catmull-Rom -> cubic bezier
@@ -855,9 +847,9 @@ scene.innerHTML = `
   <g clip-path="url(#scr)"><g transform="translate(${SCR.x} ${SCR.y})">
     <rect width="${SCR.w}" height="${SCR.h}" fill="#e3241b"/>
     <path d="M-43 155C54 87 119 191 231 148S361 76 440 123 534 166 563 141" fill="none" stroke="url(#chk2)" stroke-width="61" stroke-linecap="round"/>
-    <text x="15" y="19.5" style="font:900 7.4px var(--font-display);font-stretch:88%;letter-spacing:-.2px" fill="#0f0c0c">ASHWIN &amp; JOSHITH</text>
+    <text x="15" y="19.5" style="font:900 7.4px var(--font-display);font-stretch:88%;letter-spacing:-.2px" fill="#0f0c0c">VELOCITYCORE</text>
     <g style="font:400 4.4px var(--font-mono);letter-spacing:.4px" fill="#0f0c0c"><text x="188" y="18.5">ABOUT</text><text x="228" y="18.5">WHAT WE DO</text><text x="276" y="18.5">PROCESS</text><text x="505" y="18.5" text-anchor="end">[ LET’S TALK → ]</text><text x="15" y="35.5" font-size="4">WEB DESIGN &amp; DEVELOPMENT · LOCAL BUSINESSES</text></g>
-    <g style="font:900 74px var(--font-display);font-stretch:84%;letter-spacing:-3.3px" fill="#0f0c0c"><text x="15" y="97.5">ASHWIN</text><text x="505" y="162" text-anchor="end">&amp; JOSHITH</text></g>
+    <g style="font:900 60px var(--font-display);font-stretch:84%;letter-spacing:-2.7px" fill="#0f0c0c"><text x="15" y="96">DESIGN.</text><text x="52" y="145">DEVELOP.</text><text x="15" y="194">DELIVER.</text></g>
     <g class="s-glass" transform="translate(388 40) scale(.357)">
       <rect x="6" y="10" width="308" height="214" rx="18" fill="#0f0c0c" opacity=".3" transform="translate(10 12)"/>
       <rect x="6" y="6" width="308" height="214" rx="18" fill="url(#gw1)" stroke="#fff" stroke-opacity=".9" stroke-width="2"/>
@@ -893,7 +885,7 @@ function sizeScene() {
 const grow = (g, s, py) => g.setAttribute("transform", `translate(${SCR.cx - SCR.cx * s} ${py - SCR.cy * s}) scale(${s})`);
 let introP = 0;
 function introFx() {
-  if (!intro.offsetHeight) { introP = 1; hero.classList.add("in"); return; }          // intro hidden (reduced motion / no JS)
+  if (!intro.offsetHeight) { introP = 1; if (ready) hero.classList.add("in"); return; }   // intro hidden (reduced motion / no-intro version)
   const r = intro.getBoundingClientRect();
   const p = clamp(-r.top / (r.height - innerHeight)); introP = p;
   const t = clamp((p - .06) / .82), e = t * t * (3 - 2 * t);
@@ -907,10 +899,480 @@ function introFx() {
   if (p > .84) hero.classList.add("in");
 }
 // ═══════════════════════════════════════════════════════════════════
+// glass companion: one glass object follows you down the whole page and changes shape:
+// browser window > three people (the middle one crossed out) > mouse > mechanical key > phone > the contact page
+// ═══════════════════════════════════════════════════════════════════
+const FX = !REDUCED;
+// "mouse": after the homepage, one calm 3D mouse follows you down the page.
+// "shapes": the busier version (window > three people > mouse > key > phone > contact page). It stays in the file;
+// change the word below to switch back. The busy version is drawn smaller (COMP_SIZE).
+const COMPANION = "shapes";
+const COMP_SIZE = COMPANION === "mouse" ? 1 : .85;
+const gfx = $("#gfx");
+const GN = 120;                                                       // points per outline
+const ease3 = (t) => t * t * (3 - 2 * t);
+// the mechanical key, drawn isometrically: steel plate, black switch, see-through keycap with a red </> inside
+const KQ = .62, KC = .866, KS = .5, KOY = 17;
+const kp = (gx, gy, z) => [(gx - gy) * KC * KQ, ((gx + gy) * KS - z) * KQ + KOY];
+const kpts = (P) => P.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+const kpoly = (P, fill, stroke = "rgba(0,0,0,.45)") => `<polygon points="${kpts(P)}" fill="${fill}" stroke="${stroke}" stroke-width="1.2" stroke-linejoin="round"/>`;
+const kbox = (h, z0, z1, top, left, right) =>
+  kpoly([kp(-h, h, z1), kp(h, h, z1), kp(h, h, z0), kp(-h, h, z0)], left) + kpoly([kp(h, -h, z1), kp(h, h, z1), kp(h, h, z0), kp(h, -h, z0)], right) +
+  kpoly([kp(-h, -h, z1), kp(h, -h, z1), kp(h, h, z1), kp(-h, h, z1)], top);
+function convexHull(P) {
+  P = P.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [], up = [];
+  for (const p of P) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  for (let i = P.length - 1; i >= 0; i--) { const p = P[i]; while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop(); up.push(p); }
+  up.pop(); lo.pop(); return lo.concat(up);
+}
+function buildKey() {
+  const hb = 74, ht = 52, zb = 44, zt = 112;
+  const capTop = [kp(-ht, -ht, zt), kp(ht, -ht, zt), kp(ht, ht, zt), kp(-ht, ht, zt)];
+  const capL = [kp(-hb, hb, zb), kp(hb, hb, zb), kp(ht, ht, zt), kp(-ht, ht, zt)];
+  const capR = [kp(hb, -hb, zb), kp(hb, hb, zb), kp(ht, ht, zt), kp(ht, -ht, zt)];
+  const hp = convexHull([kp(-hb, -hb, zb), kp(hb, -hb, zb), kp(hb, hb, zb), kp(-hb, hb, zb), ...capTop]);
+  let s0 = 0; hp.forEach((p, i) => { if (p[1] < hp[s0][1]) s0 = i; });         // start at the top-most point, running clockwise
+  const hull = "M" + hp.slice(s0).concat(hp.slice(0, s0)).map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join("L") + "Z";
+  const glyph = (z, fill, op) => `<text x="0" y="0" text-anchor="middle" dominant-baseline="central" transform="matrix(${(KC * KQ).toFixed(3)} ${(KS * KQ).toFixed(3)} ${(-KC * KQ).toFixed(3)} ${(KS * KQ).toFixed(3)} 0 ${(-z * KQ + KOY).toFixed(1)})" style="font:500 56px var(--font-mono)" fill="${fill}" opacity="${op}">&lt;/&gt;</text>`;
+  const holes = [[-92, -92], [92, -92], [92, 92], [-92, 92]].map(([x, y]) => { const [a, b] = kp(x, y, 10); return `<ellipse cx="${a.toFixed(1)}" cy="${b.toFixed(1)}" rx="5.5" ry="3.2" fill="#262b30" stroke="#d5dce1" stroke-width=".8"/>`; }).join("");
+  const svg =
+    kbox(110, 0, 10, "url(#gplate)", "#8b959d", "#6c757d") +
+    kpoly([kp(-70, -70, 10), kp(70, -70, 10), kp(70, 70, 10), kp(-70, 70, 10)], "#2f353b", "rgba(255,255,255,.35)") + holes +
+    kbox(62, 10, 34, "#33363d", "#18191d", "#0e0f12") + kbox(46, 34, 58, "#3b3e46", "#1b1c21", "#101114") +
+    kpoly([kp(-8, -24, 58), kp(8, -24, 58), kp(8, 24, 58), kp(-8, 24, 58)], "#0a0a0c") + kpoly([kp(-24, -8, 58), kp(24, -8, 58), kp(24, 8, 58), kp(-24, 8, 58)], "#0a0a0c") +
+    '<g id="keycap">' + kpoly(capL, "rgba(190,230,250,.22)", "rgba(255,255,255,.9)") + kpoly(capR, "rgba(111,211,247,.3)", "rgba(255,255,255,.9)") +
+    kpoly(capTop, "url(#gcap)", "rgba(255,255,255,.95)") + kpoly([kp(-40, -40, zt), kp(40, -40, zt), kp(40, 40, zt), kp(-40, 40, zt)], "none", "rgba(255,255,255,.45)") +
+    glyph(zt - 16, "#7a0f0a", .55) + glyph(zt - 3, "#e3241b", 1) + "</g>";
+  return { svg, hull };
+}
+const KEY = buildKey();
+const bust = (ox, oy) =>`M${ox} ${oy - 80}C${ox + 22} ${oy - 80} ${ox + 36} ${oy - 62} ${ox + 36} ${oy - 40}C${ox + 36} ${oy - 22} ${ox + 27} ${oy - 10} ${ox + 13} ${oy - 2}C${ox + 52} ${oy + 8} ${ox + 70} ${oy + 32} ${ox + 70} ${oy + 62}L${ox + 70} ${oy + 82}H${ox - 70}L${ox - 70} ${oy + 62}C${ox - 70} ${oy + 32} ${ox - 52} ${oy + 8} ${ox - 13} ${oy - 2}C${ox - 27} ${oy - 10} ${ox - 36} ${oy - 22} ${ox - 36} ${oy - 40}C${ox - 36} ${oy - 62} ${ox - 22} ${oy - 80} ${ox} ${oy - 80}Z`;
+// every outline starts top-centre and runs clockwise, so any two of them can be blended point by point
+const SHAPES = {
+  window: "M0 -110H142A18 18 0 0 1 160 -92V92A18 18 0 0 1 142 110H-142A18 18 0 0 1 -160 92V-92A18 18 0 0 1 -142 -110Z",
+  pl: bust(-150, 14), pm: bust(0, 4), pr: bust(150, 14),
+  mouse: "M0 -132C44 -132 70 -96 72 -40C74 36 60 126 0 132C-60 126 -74 36 -72 -40C-70 -96 -44 -132 0 -132Z",   // long and narrow pill
+  key: KEY.hull,
+  phone: "M0 -165H55A30 30 0 0 1 85 -135V135A30 30 0 0 1 55 165H-55A30 30 0 0 1 -85 135V-135A30 30 0 0 1 -55 -165Z",
+};
+const PH_STYLE = "font:900 22px var(--font-display);font-stretch:84%;letter-spacing:-1px";
+const PHONE_UI = `
+  <rect x="-73" y="-153" width="146" height="26" fill="#0f0c0c"/>
+  <text x="-62" y="-136" style="font:900 9px var(--font-display);letter-spacing:-.2px" fill="#f8f4f0">VC</text>
+  <rect x="38" y="-142" width="24" height="2.4" rx="1.2" fill="#f8f4f0"/><rect x="38" y="-136" width="24" height="2.4" rx="1.2" fill="#f8f4f0"/>
+  <rect x="-73" y="-127" width="146" height="124" fill="#e3241b"/>
+  <text x="-62" y="-92" style="${PH_STYLE}" fill="#0f0c0c">WEBSITES</text><text x="-62" y="-69" style="${PH_STYLE}" fill="#0f0c0c">THAT FEEL</text>
+  <text x="-62" y="-44" style="font:italic 400 24px var(--font-serif)" fill="#f8f4f0">local.</text>
+  <rect x="-62" y="-27" width="54" height="16" fill="#0f0c0c"/><rect x="-57" y="-21" width="30" height="3" rx="1.5" fill="#6fd3f7"/>
+  <rect x="-66" y="8" width="62" height="86" rx="4" fill="#fff" stroke="#e9dcd6"/><rect x="-60" y="14" width="26" height="26" rx="3" fill="#e3241b"/><rect x="-60" y="48" width="50" height="5" rx="2.5" fill="#0f0c0c"/><rect x="-60" y="58" width="40" height="4" rx="2" fill="#0f0c0c" opacity=".4"/>
+  <rect x="4" y="8" width="62" height="86" rx="4" fill="#0f0c0c"/><rect x="10" y="14" width="26" height="26" rx="3" fill="#6fd3f7"/><rect x="10" y="48" width="50" height="5" rx="2.5" fill="#f8f4f0"/><rect x="10" y="58" width="40" height="4" rx="2" fill="#f8f4f0" opacity=".5"/>
+  <rect x="-66" y="108" width="104" height="6" rx="3" fill="#0f0c0c"/><rect x="-66" y="120" width="132" height="4" rx="2" fill="#0f0c0c" opacity=".4"/><rect x="-66" y="130" width="120" height="4" rx="2" fill="#0f0c0c" opacity=".4"/><rect x="-66" y="140" width="126" height="4" rx="2" fill="#0f0c0c" opacity=".4"/>
+  <rect x="-66" y="162" width="70" height="20" rx="10" fill="#6fd3f7"/>
+  <rect x="-73" y="232" width="146" height="306" fill="#e3241b"/>
+  <text x="0" y="372" text-anchor="middle" style="font:900 30px var(--font-display);font-stretch:84%;letter-spacing:-1.4px" fill="#0f0c0c">LET’S</text>
+  <text x="0" y="402" text-anchor="middle" style="font:900 30px var(--font-display);font-stretch:84%;letter-spacing:-1.4px" fill="#0f0c0c">BUILD</text>
+  <text x="0" y="431" text-anchor="middle" style="font:italic 400 30px var(--font-serif)" fill="#f8f4f0">yours.</text>
+  <rect x="-34" y="446" width="68" height="18" rx="9" fill="#6fd3f7"/>`;
+
+let ST = [], GFRAMES = [], KEND = 8, gobj, shadowG, dts = [], gpaths = [], xpaths = [], xg, phc, mtop, mbot;
+let KEYCLICK_Y = Infinity, keyClickAt = -1e9, prevY = 0, keycapEl = null;
+let spinT = 0, spin = 0, spinY = 0, spinLast = -1e9, spinNow = 0, spinOn = false, spinDir = 1;   // the mouse's twirl: it follows how far you scroll, then settles upright
+const gT = { x: 0, y: 0, tx: 0, ty: 0 };                             // cursor tilt while the window is showing
+const tmp = [0, 1, 2].map(() => new Float32Array(GN * 2));
+
+function initGlass() {
+  document.documentElement.classList.add("fx");
+  gfx.innerHTML = `
+  <defs>
+    <linearGradient id="gfill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".92"/><stop offset=".55" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#6fd3f7" stop-opacity=".5"/></linearGradient>
+    <linearGradient id="gblue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9edff"/><stop offset="1" stop-color="#6fd3f7"/></linearGradient>
+    <linearGradient id="gcap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".6" stop-color="#cfeeff" stop-opacity=".25"/><stop offset="1" stop-color="#6fd3f7" stop-opacity=".35"/></linearGradient>
+    <linearGradient id="gplate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef2f5"/><stop offset=".55" stop-color="#bcc5cc"/><stop offset="1" stop-color="#97a1a9"/></linearGradient>
+    <linearGradient id="gpcb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#23424c"/><stop offset="1" stop-color="#0e1c23"/></linearGradient>
+    <linearGradient id="gcyl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a2d33"/><stop offset=".45" stop-color="#0b0c0f"/><stop offset="1" stop-color="#1c1e23"/></linearGradient>
+    <radialGradient id="gglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff5a4d" stop-opacity=".75"/><stop offset="1" stop-color="#ff5a4d" stop-opacity="0"/></radialGradient>
+    <filter id="gsh" x="-25%" y="-25%" width="150%" height="165%"><feDropShadow dx="0" dy="22" stdDeviation="11" flood-color="#3a0000" flood-opacity=".38"/></filter>
+    <clipPath id="phclip"><rect x="-73" y="-153" width="146" height="306" rx="22"/></clipPath>
+    <path id="gprobe"/>
+  </defs>
+  <g id="gobj"><g id="gshadow" filter="url(#gsh)">
+    ${["A", "B", "C"].map((b) => `<path id="g0${b}" fill="none" stroke="#0f0c0c" stroke-opacity=".28" stroke-width="3.6" vector-effect="non-scaling-stroke"/><path id="g1${b}" fill="url(#gfill)" stroke="#fff" stroke-opacity=".95" stroke-width="2" vector-effect="non-scaling-stroke"/>`).join("")}
+    <g id="dt0">
+      <circle cx="-130" cy="-87" r="6" fill="#e3241b"/><circle cx="-110" cy="-87" r="6" fill="#0f0c0c"/><circle cx="-90" cy="-87" r="6" fill="#6fd3f7"/>
+      <rect x="-64" y="-94" width="190" height="14" rx="7" fill="#0f0c0c" opacity=".14"/>
+      <rect x="-132" y="-49" width="150" height="16" rx="3" fill="#0f0c0c"/><rect x="-132" y="-25" width="110" height="16" rx="3" fill="#0f0c0c"/>
+      <rect x="-132" y="7" width="170" height="8" rx="4" fill="#0f0c0c" opacity=".45"/><rect x="-132" y="23" width="140" height="8" rx="4" fill="#0f0c0c" opacity=".45"/>
+      <rect x="-132" y="55" width="92" height="30" rx="15" fill="#6fd3f7"/>
+      <rect x="50" y="-51" width="82" height="82" rx="10" fill="#e3241b"/><path d="M50 15l30-34 24 26 12-12 16 20v14a10 10 0 0 1-10 10H60a10 10 0 0 1-10-10z" fill="#0f0c0c" opacity=".85"/>
+      <path d="M106 43l38 22-17 4 9 18-8 4-9-18-13 12z" fill="#0f0c0c" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+    </g>
+    <g id="dt1"><g id="xg">
+      <path class="xp" d="M-48 -44L48 60M48 -44L-48 60" pathLength="1" stroke="#fff" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="xp" d="M-48 -44L48 60M48 -44L-48 60" pathLength="1" stroke="#e3241b" stroke-width="13" stroke-linecap="round" fill="none" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </g></g>
+    <g id="dt2">
+      <g id="mtop" transform="scale(.9 1.08)">
+        <path d="M0 -112C58 -112 88 -66 88 -10C88 64 64 112 0 112C-64 112 -88 64 -88 -10C-88 -66 -58 -112 0 -112Z" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
+        <path d="M-56 -4C-60 -34 -34 -44 0 -44C34 -44 60 -34 56 -4C58 36 46 78 0 88C-46 78 -58 36 -56 -4Z" fill="url(#gpcb)" stroke="#0a1216" stroke-width="1.6"/>
+        <path d="M-40 -22H-8V8H22M30 -28V2H44M-46 30H-14L0 46H36M-30 56H-6" fill="none" stroke="#a9dcee" stroke-opacity=".6" stroke-width="1.2"/>
+        ${[[-44,-8],[-22,-30],[22,-30],[44,-14],[-46,18],[-8,40],[26,56],[44,36],[-26,70],[10,74],[34,18],[-14,-22]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="1.9" fill="#e0b84e"/>`).join("")}
+        <rect x="-30" y="8" width="32" height="22" rx="2" fill="#0d0f12" stroke="#cfd8de" stroke-opacity=".5" stroke-width=".8"/>
+        <path d="M-26 5v3M-20 5v3M-14 5v3M-8 5v3M-2 5v3M-26 30v3M-20 30v3M-14 30v3M-8 30v3M-2 30v3" stroke="#cfd8de" stroke-width="1.4"/>
+        <rect x="12" y="30" width="22" height="16" rx="2" fill="#0d0f12" stroke="#cfd8de" stroke-opacity=".5" stroke-width=".8"/>
+        <rect x="-46" y="46" width="14" height="8" rx="1.5" fill="#2c3b46"/><rect x="40" y="40" width="10" height="14" rx="2" fill="#2c3b46"/>
+        <circle cx="-48" cy="4" r="5.5" fill="#d7dee3" stroke="#6b7a84"/><path d="M-52 4h8M-48 0v8" stroke="#6b7a84" stroke-width="1.4"/>
+        <circle cx="48" cy="6" r="5.5" fill="#d7dee3" stroke="#6b7a84"/><path d="M44 6h8M48 2v8" stroke="#6b7a84" stroke-width="1.4"/>
+        <rect x="-64" y="-64" width="36" height="26" rx="3" fill="#1b1e24" stroke="#fff" stroke-opacity=".55"/><rect x="-60" y="-60" width="14" height="8" rx="1.5" fill="#e3241b"/><rect x="-44" y="-60" width="12" height="18" rx="2" fill="#0b0c0f"/>
+        <rect x="28" y="-64" width="36" height="26" rx="3" fill="#1b1e24" stroke="#fff" stroke-opacity=".55"/><rect x="46" y="-60" width="14" height="8" rx="1.5" fill="#6fd3f7"/><rect x="32" y="-60" width="12" height="18" rx="2" fill="#0b0c0f"/>
+        <path d="M-46 -38C-38 -18 -22 -24 -18 -4M46 -38C38 -14 24 -22 20 -6M0 -44C-2 -30 4 -22 -2 -8" fill="none" stroke="#0b0d10" stroke-width="4.4" stroke-linecap="round"/>
+        <path d="M-46 -38C-38 -18 -22 -24 -18 -4M46 -38C38 -14 24 -22 20 -6M0 -44C-2 -30 4 -22 -2 -8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <rect x="-17" y="-102" width="34" height="64" rx="10" fill="#101216" stroke="#cfd8de" stroke-width="1.6"/>
+        <ellipse cx="0" cy="-70" rx="12.5" ry="27" fill="#e3241b" stroke="#7a0f0a" stroke-width="1.4"/>
+        <path d="M-12 -88H12M-12.5 -80H12.5M-12.5 -72H12.5M-12.5 -64H12.5M-12 -56H12M-10 -48H10" stroke="#7a0f0a" stroke-width="1.6"/>
+        <circle cx="0" cy="-70" r="4.5" fill="#0b0d10" stroke="#fff" stroke-width="1.2"/>
+        <g transform="rotate(-30 58 -40)"><rect x="46" y="-76" width="26" height="68" rx="13" fill="url(#gcyl)"/><rect x="51" y="-70" width="4" height="56" rx="2" fill="#fff" opacity=".5"/></g>
+        <circle cx="-2" cy="68" r="14" fill="url(#gglow)"/><circle cx="-2" cy="68" r="5" fill="#ff5a4d" stroke="#fff" stroke-width="1.2"/>
+        <path d="M-70 -46C-50 -90 -20 -104 0 -104" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="3" stroke-linecap="round"/>
+        <path d="M-82 -6C-84 -30 -80 -40 -76 -48" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.4" stroke-linecap="round"/>
+      </g>
+      <g id="mbot" transform="scale(.9 1.08)">
+        <path d="M0 -112C58 -112 88 -66 88 -10C88 64 64 112 0 112C-64 112 -88 64 -88 -10C-88 -66 -58 -112 0 -112Z" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
+        <g fill="#f4f5f6" stroke="#aeb7be" stroke-width="1.2"><rect x="-70" y="-84" width="38" height="13" rx="6.5" transform="rotate(-24 -51 -77)"/><rect x="32" y="-84" width="38" height="13" rx="6.5" transform="rotate(24 51 -77)"/><rect x="-70" y="70" width="38" height="13" rx="6.5" transform="rotate(24 -51 77)"/><rect x="32" y="70" width="38" height="13" rx="6.5" transform="rotate(-24 51 77)"/></g>
+        <circle cx="0" cy="14" r="46" fill="url(#gglow)" opacity=".6"/>
+        <circle cx="0" cy="14" r="30" fill="#0b0d10" stroke="#cfd8de" stroke-width="2"/><circle cx="0" cy="14" r="22" fill="none" stroke="#e3241b" stroke-width="3.4"/><circle cx="0" cy="14" r="12" fill="#151a20" stroke="#6fd3f7" stroke-width="1.4"/><circle cx="-4" cy="10" r="3" fill="#fff" opacity=".7"/>
+        <rect x="-36" y="-58" width="72" height="34" rx="9" fill="#fff" fill-opacity=".16" stroke="#fff" stroke-opacity=".7" stroke-width="1.6"/><circle cx="0" cy="-41" r="3.5" fill="#cfd8de" stroke="#6b7a84"/>
+        <circle cx="0" cy="-86" r="6" fill="url(#gblue)" stroke="#fff" stroke-width="1.6"/>
+        <path d="M-50 62C-30 74 30 74 50 62M-44 72C-26 82 26 82 44 72" fill="none" stroke="#0f0c0c" stroke-opacity=".45" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+    <g id="dt3">${KEY.svg}</g>
+    <g id="dt4">
+      <g clip-path="url(#phclip)"><rect x="-73" y="-153" width="146" height="306" fill="#f8f4f0"/><g id="phc">${PHONE_UI}</g></g>
+      <rect x="-73" y="-153" width="146" height="306" rx="22" fill="none" stroke="#0f0c0c" stroke-opacity=".25" stroke-width="2"/>
+      <rect x="-26" y="-150" width="52" height="11" rx="5.5" fill="#0f0c0c"/>
+    </g>
+  </g></g>`;
+
+  // sample each outline into GN evenly spaced points
+  const probe = $("#gprobe", gfx);
+  const sample = (d) => {
+    probe.setAttribute("d", d); const L = probe.getTotalLength(), a = new Float32Array(GN * 2);
+    for (let i = 0; i < GN; i++) { const p = probe.getPointAtLength(L * i / GN); a[2 * i] = p.x; a[2 * i + 1] = p.y; }
+    return a;
+  };
+  const Z = new Float32Array(GN * 2), S = {};
+  for (const k in SHAPES) S[k] = sample(SHAPES[k]);
+  ST = COMPANION === "mouse"
+    ? [[S.window, Z, Z], [S.mouse, Z, Z], [S.mouse, Z, Z], [S.mouse, Z, Z], [S.mouse, Z, Z]]
+    : [[S.window, Z, Z], [S.pl, S.pm, S.pr], [S.mouse, Z, Z], [S.key, Z, Z], [S.phone, Z, Z]];
+  gobj = $("#gobj", gfx); shadowG = $("#gshadow", gfx); xg = $("#xg", gfx); phc = $("#phc", gfx);
+  dts = [0, 1, 2, 3, 4].map((i) => $("#dt" + i, gfx));
+  mtop = $("#mtop", gfx); mbot = $("#mbot", gfx); keycapEl = $("#keycap", gfx);
+  gpaths = ["A", "B", "C"].map((b) => [$("#g0" + b, gfx), $("#g1" + b, gfx)]);
+  xpaths = $$(".xp", gfx);
+  hero.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return; const r = hero.getBoundingClientRect();
+    gT.tx = ((e.clientX - r.left) / r.width - .5) * 2; gT.ty = ((e.clientY - r.top) / r.height - .5) * 2;
+  });
+  hero.addEventListener("pointerleave", () => { gT.tx = gT.ty = 0; });
+  requestAnimationFrame(glassLoop);
+}
+
+// a smooth outline through GN points
+function outline(a) {
+  const n = GN, f = (v) => Math.round(v * 10) / 10;
+  let d = `M${f((a[2 * n - 2] + a[0]) / 2)} ${f((a[2 * n - 1] + a[1]) / 2)}`;
+  for (let i = 0; i < n; i++) { const j = (i + 1) % n; d += `Q${f(a[2 * i])} ${f(a[2 * i + 1])} ${f((a[2 * i] + a[2 * j]) / 2)} ${f((a[2 * i + 1] + a[2 * j + 1]) / 2)}`; }
+  return d + "Z";
+}
+
+// where the object should be at each point of the page: shape state u (0 window, 1 people, 2 mouse, 3 key, 4 phone),
+// xo = the cross over the middle person, rm = middle person removed, en = phone enlarging into the contact page,
+// ps = how far the phone's screen has scrolled
+function buildFrames() {
+  const vw = innerWidth, vh = innerHeight, portrait = vw < vh * .9 || vw < 700;
+  const kb = portrait ? vw / 430 : Math.min(vw / 1300, vh / 700);
+  const top = (el) => el.getBoundingClientRect().top + scrollY;
+  const hT = top($(".hero-hold")), aT = top($("#about")), wT = top($("#what")), s1 = top($("#svc-1")), s2 = top($("#svc-2")), s3 = top($("#svc-3")), s4 = top($("#svc-4")), pT = top($("#process")), cT = top($("#contact"));
+  const gA = $(".glass"), hr = hero.getBoundingClientRect(), gr = gA.getBoundingClientRect();
+  const H = { cx: gr.left - hr.left + gr.width / 2, cy: gr.top - hr.top + gr.height / 2, k: gA.offsetWidth / 320, rot: -7 };
+  const F = (fx, fy, k, rot) => ({ cx: vw * fx, cy: vh * fy, k: kb * k, rot });
+  const P = portrait
+    ? { about: F(.5, .8, .78, -5), mouse1: F(.5, .74, 1.2, 0), mouse2: F(.5, .7, 1.25, 0), key: F(.5, .74, 1.05, 0), phone: F(.5, .72, .95, 6), launch: F(.5, .72, .9, -4), proc: F(.5, .8, .7, 4) }
+    : { about: F(.77, .6, .95, -6), mouse1: F(.77, .52, 1.8, 0), mouse2: F(.75, .5, 1.85, 0), key: F(.75, .5, 1.4, 0), phone: F(.75, .5, 1.05, 6), launch: F(.75, .5, 1, -4), proc: F(.89, .2, .8, 5) };
+  KEYCLICK_Y = s2 + .1 * vh;                                      // scrolling down past here clicks the key once
+  let prev = { u: 0, xo: 0, rm: 0, en: 0, ps: 0, fo: 0, ...H };
+  const keys = [];
+  const add = (y, o) => { prev = { ...prev, ...o, y: Math.max(y, keys.length ? keys[keys.length - 1].y + 1 : -Infinity) }; keys.push(prev); };
+  if (COMPANION === "mouse") {
+    // calm version: the window turns into one mouse after the homepage and stays with you, drifting to the clear side of each section
+    const q = portrait ? .9 : 1, R = (fx, fy, rot) => ({ cx: vw * fx, cy: vh * fy, k: kb * q, rot });
+    const m = portrait
+      ? { about: R(.5, .82, -125), what: R(.5, .8, -115), svc: R(.5, .76, -130), proc: R(.5, .82, -120) }
+      : { about: R(.8, .6, -125), what: R(.78, .52, -115), svc: R(.76, .5, -130), proc: R(.86, .6, -120) };
+    add(hT, {}); add(aT - vh, {});                                      // the homepage holds still
+    add(aT + .1 * vh, { u: 1, ...m.about });                            // the window turns into the mouse
+    add(aT + .5 * vh, { cy: portrait ? vh * .82 : vh * .34 }); add(aT + .95 * vh, { cy: portrait ? vh * .82 : vh * .22 });   // out of the way of the founder cards
+    add(wT - .2 * vh, {}); add(wT + .2 * vh, { ...m.what });
+    add(s1 + .3 * vh, { ...m.svc, rot: m.svc.rot + 8 }); add(s2 + .3 * vh, { ...m.svc }); add(s3 + .3 * vh, { ...m.svc, rot: m.svc.rot - 8 }); add(s4 + .3 * vh, { ...m.svc });
+    add(pT + .2 * vh, { ...m.proc });
+    add(cT - .6 * vh, {}); add(cT - .15 * vh, { fo: 1 });               // fades away before the contact form
+    return { keys, kEnd: 8 };
+  }
+  add(hT, {}); add(aT - vh, {});                                      // the homepage holds still
+  add(aT + .05 * vh, { u: 1, ...P.about });                           // window becomes three people
+  // as the cards scroll up the people drift to the empty space at the top, then the middle one is crossed out and removed
+  add(aT + .45 * vh, { cy: portrait ? vh * .8 : vh * .34 }); add(aT + .8 * vh, { xo: 1, cy: portrait ? vh * .8 : vh * .22 }); add(aT + 1.05 * vh, { rm: 1 });
+  add(wT - .3 * vh, { u: 2, ...P.mouse1, cy: portrait ? P.mouse1.cy : vh * .24 });   // the two founders merge into a mouse up in the clear space...
+  add(wT + .15 * vh, { ...P.mouse1 });                                // ...then it settles into place
+  add(s1 + .35 * vh, { ...P.mouse2 });
+  add(s2 + .05 * vh, { u: 3, ...P.key });                             // mouse becomes a mechanical key
+  add(s2 + .6 * vh, {});
+  add(s3 + .05 * vh, { u: 4, ...P.phone, ps: 0 });                    // key becomes a phone
+  add(s3 + .45 * vh, {});
+  add(s4 + .15 * vh, { ...P.launch, ps: .45 });                       // the phone's screen scrolls
+  add(pT - .08 * vh, { ...P.proc, ps: .7 });
+  add(cT - .6 * vh, { ps: 1 }); add(cT - .15 * vh, { fo: 1 });         // the phone's screen reaches its end, then it fades away before the contact form (no zoom)
+  return { keys, kEnd: Math.max(vw / 146, vh / 306) * 1.03 };
+}
+function frameAt(Y) {
+  const ks = GFRAMES; if (!ks.length) return null;
+  if (Y <= ks[0].y) return ks[0];
+  if (Y >= ks[ks.length - 1].y) return ks[ks.length - 1];
+  let i = 0; while (ks[i + 1].y < Y) i++;
+  const a = ks[i], b = ks[i + 1], f = ease3((Y - a.y) / (b.y - a.y)), o = {};
+  for (const k of ["u", "xo", "rm", "en", "ps", "fo", "cx", "cy", "k", "rot"]) o[k] = a[k] + (b[k] - a[k]) * f;
+  return o;
+}
+
+function renderGlass(now) {
+  const vw = innerWidth, vh = innerHeight, Y = scrollY, s = frameAt(Y);
+  if (!s) return;
+  const ov = clamp((Y - (GFRAMES[0].y - .45 * vh)) / (.1 * vh));      // only once the homepage is showing
+  const op = ov * (1 - clamp((s.en - .86) / .14)) * (1 - s.fo);                    // once the phone has filled the window it melts away into the real contact page
+  if (op <= .001) { gfx.style.display = "none"; return; }
+  gfx.style.display = "block"; gfx.style.opacity = op;
+
+  gT.x += (gT.tx - gT.x) * .08; gT.y += (gT.ty - gT.y) * .08;
+  const hw = clamp(1 - s.u), en = ease3(s.en);
+  let cx = s.cx + gT.x * 14 * hw, cy = s.cy + gT.y * 14 * hw + Math.sin(now / 900) * 6 * (1 - en), rot = s.rot + gT.x * 6 * hw, k = s.k * (1 + (COMP_SIZE - 1) * clamp(s.u));
+  // the mouse drifts around and flips over now and then (top, then underside), settling before it becomes the key
+  const wm = COMPANION === "mouse" ? clamp(s.u) : clamp((s.u - 1.6) / .4) * clamp((3 - s.u) / .5), dr = .6;
+  let sx = 1;
+  const cyc = now / 1000 / 12, pF = cyc - Math.floor(cyc), ang = Math.PI * 2 * (pF > .86 ? ease3((pF - .86) / .14) : 0);   // flip angle: rests, then rolls over
+  if (wm > 0) {
+    sx = 1 + (Math.cos(ang) - 1) * wm;
+    cx += Math.sin(now / 1300) * 26 * wm * dr; cy += Math.cos(now / 1700) * 16 * wm * dr; rot += Math.sin(now / 2100) * 2 * wm * dr;
+  }
+  mtop.style.display = sx >= 0 ? "" : "none"; mbot.style.display = sx >= 0 ? "none" : "";
+  if (en > 0) { cx += (vw / 2 - cx) * en; cy += (vh / 2 - cy) * en; rot *= 1 - en; k = Math.exp(Math.log(k) + (Math.log(KEND) - Math.log(k)) * en); }
+  gobj.setAttribute("transform", `translate(${cx.toFixed(1)} ${cy.toFixed(1)}) rotate(${rot.toFixed(2)}) scale(${(k * sx).toFixed(4)} ${k.toFixed(4)})`);
+  shadowG.setAttribute("filter", en > .02 ? "none" : "url(#gsh)");
+  // while it's a mouse, swap the flat drawing for the real 3D model (if the 3D library loaded)
+  const w3 = !M3 ? 0 : COMPANION === "mouse" ? clamp((s.u - .6) / .4) : clamp((s.u - 1.7) / .3) * clamp((2.9 - s.u) / .3);
+  gobj.style.opacity = (1 - w3).toFixed(3);
+  // twirl: scrolling turns the mouse (about 1 turn per 600px); when you stop it eases to the nearest turn, so it rests upright
+  const sdt = Math.min(now - spinNow, 250); spinNow = now;
+  if (w3 > .02) {
+    const dY = spinOn ? Y - spinY : 0, TAU = Math.PI * 2;      // (the first frame it appears doesn't count as scrolling)
+    spinOn = true;
+    if (Math.abs(dY) > .5) { spinT = Math.max(spin - 7, Math.min(spin + 7, spinT + Math.max(-150, Math.min(150, dY)) * TAU / 600)); spinLast = now; spinDir = dY > 0 ? 1 : -1; }
+    else if (now - spinLast > 350) spinT = Math.round(spinT / TAU + spinDir * .25) * TAU;   // finish the turn you started (past a quarter turn), else ease back
+    spin += (spinT - spin) * (1 - Math.exp(-sdt / 120));
+    if (now - spinLast > 350 && Math.abs(spin - spinT) < .002) { const n = Math.round(spinT / TAU); spinT -= n * TAU; spin = spinT; }
+  } else { spinT = spin = 0; spinOn = false; }
+  spinY = Y;
+  render3D(w3 * (1 - s.fo), cx, cy, rot, k, ang, spin, now);
+
+  // blend the three glass bodies from one shape to the next
+  const iU = Math.min(3, Math.floor(s.u)), tU = clamp(s.u - iU);
+  for (let b = 0; b < 3; b++) { const A = ST[iU][b], B = ST[iU + 1][b], out = tmp[b]; for (let i = 0; i < out.length; i++) out[i] = A[i] + (B[i] - A[i]) * tU; }
+  if (s.rm > 0) { const m = tmp[1], r = 1 - s.rm; for (let i = 0; i < GN; i++) { m[2 * i] *= r; m[2 * i + 1] = 4 + (m[2 * i + 1] - 4) * r; } }
+  for (let b = 0; b < 3; b++) { const d = outline(tmp[b]); gpaths[b][0].setAttribute("d", d); gpaths[b][1].setAttribute("d", d); }
+
+  // one-shot key click: each time you scroll DOWN past the trigger point, the keycap presses down once and springs back
+  if (prevY < KEYCLICK_Y && Y >= KEYCLICK_Y && s.u > 2.9) keyClickAt = now;
+  prevY = Y;
+  const kt = (now - keyClickAt) / 1000;
+  let press = 0;
+  if (kt >= 0 && kt < .5) press = kt < .09 ? ease3(kt / .09) : kt < .15 ? 1 : (1 - ease3(clamp((kt - .15) / .28))) - .07 * Math.sin(Math.PI * clamp((kt - .15) / .28));
+  const pressT = press ? `translate(0 ${(press * 13).toFixed(2)})` : "";
+  if (keycapEl) keycapEl.setAttribute("transform", pressT);
+
+  // the details on top of each shape fade in and out with it
+  for (let i = 0; i < 5; i++) dts[i].style.opacity = (COMPANION === "mouse" ? (i === 0 ? 1 - clamp(s.u) : i === 2 ? clamp(s.u) : 0) : Math.pow(clamp(1 - Math.abs(s.u - i)), 1.4)).toFixed(3);
+  const xo = clamp(s.xo), xs = Math.max(0, 1 - s.rm);
+  xpaths.forEach((p) => p.setAttribute("stroke-dashoffset", (1 - xo).toFixed(3)));
+  xg.setAttribute("transform", `translate(0 4) scale(${xs.toFixed(3)}) translate(0 -4)`);
+  phc.setAttribute("transform", `translate(0 ${(-clamp(s.ps) * 385).toFixed(1)})`);
+}
+function glassLoop(now) { renderGlass(now); requestAnimationFrame(glassLoop); }
+function glassLayout() {
+  gfx.setAttribute("viewBox", `0 0 ${innerWidth} ${innerHeight}`);
+  const r = buildFrames(); GFRAMES = r.keys; KEND = r.kEnd; resize3D();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// the real 3D mouse (three.js): a clear shell with the circuit board, red scroll wheel, black cylinder, wires and LED
+// inside, and an underside with feet, a red-ringed sensor and a battery cover, so it can roll over in 3D
+// ═══════════════════════════════════════════════════════════════════
+let M3 = null;
+async function initMouse3D() {
+  const THREE = await import("three");
+  const renderer = new THREE.WebGLRenderer({ canvas: $("#gl3d"), alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 800 ? 1.5 : 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.5; renderer.setClearColor(0x000000, 0);
+  const scene = new THREE.Scene();
+  // a tiny photo studio baked into the reflections: a dark room, one off-axis softbox and strip lights for crisp edge lines
+  const studio = new THREE.Scene(); studio.background = new THREE.Color(0x4a4e5c);
+  const panel = (w, h, power, x, y, z) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(1, 1, 1).multiplyScalar(power), side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); studio.add(m); };
+  panel(22, 14, 4.2, -22, 20, 20);   // key softbox
+  panel(34, 22, 1.7, 0, 6, 30);      // broad soft front fill, so the parts inside the shell are lit
+  panel(2.4, 34, 7, 30, 4, 12);      // strip light on the right
+  panel(2.4, 34, 5, -30, -4, -10);   // strip light on the left
+  panel(26, 10, 2.4, 0, -24, 12);    // soft fill from below so the underside reads too
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(studio, .04).texture;
+  scene.environmentIntensity = 2.4;                                 // glass reflects the studio only: no direct lights, so no fake hot spot
+  const camera = new THREE.PerspectiveCamera(30, 1, 10, 30000);
+  scene.add(new THREE.AmbientLight(0xffffff, 1));
+  const root = new THREE.Group(), inner = new THREE.Group(); root.add(inner); scene.add(root);
+
+  const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  const mesh = (geo, mat, x = 0, y = 0, z = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); return m; };
+  // non-metal parts get a little self-lighting so the board and wheel keep their colour inside the dark studio
+  const std = (color, rough = .5, metal = 0) => new THREE.MeshStandardMaterial({ color, roughness: rough, metalness: metal, emissive: metal < .5 ? new THREE.Color(color).multiplyScalar(.34) : 0x000000 });
+  const glow = (color, i) => new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: i });
+  const tube = (pts, r, mat, closed = false, seg = 100) => mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, closed), seg, r, 8, closed), mat);
+  const silver = std(0xe9eff3, .22, .95), black = std(0x0c0d10, .4, .3), plastic = std(0xf4f5f6, .45, .05);
+
+  // a real mouse: 2 long, about 0.9 wide, a hump toward the back (about 0.4 tall), a flat belly, narrower at the front (+Y)
+  const HW = .62, TAPER = .3, PN = 3.4, HBOT = .12;
+  const htop = (y) => .36 * (.5 + .85 * Math.exp(-Math.pow((y + .3) / .6, 2)));   // the hump sits toward the back and slopes down to the buttons
+  const hw = (y) => HW * (1 - TAPER * Math.pow(Math.max(0, (y + 1) / 2), 1.1));       // wide at the back, a narrower but blunt nose
+  const onShell = (x, y, z) => {                                       // a point on the unit sphere, pushed out to the pill's surface
+    const f = Math.pow(Math.pow(Math.abs(x), PN) + Math.pow(Math.abs(y), PN) + Math.pow(Math.abs(z), PN), 1 / PN) || 1;
+    x /= f; y /= f; z /= f; return V(x * hw(y), y, z * (z >= 0 ? htop(y) : HBOT));
+  };
+  const sg = new THREE.SphereGeometry(1, 96, 64), pos = sg.attributes.position;
+  for (let i = 0; i < pos.count; i++) { const p = onShell(pos.getX(i), pos.getY(i), pos.getZ(i)); pos.setXYZ(i, p.x, p.y, p.z); }
+  sg.computeVertexNormals();
+
+  // clear glass shell, plus a bright fresnel rim so the edge reads like real glass
+  const shell = mesh(sg, new THREE.MeshPhysicalMaterial({ color: 0xe6f6ff, roughness: .05, metalness: 0, transparent: true, opacity: .2, clearcoat: 1, clearcoatRoughness: .03, envMapIntensity: 3.2, side: THREE.DoubleSide, depthWrite: false }));
+  shell.renderOrder = 10; inner.add(shell);
+  const rim = mesh(sg, new THREE.ShaderMaterial({
+    uniforms: { uColor: { value: new THREE.Color(0xdff4ff) } }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    vertexShader: "varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }",
+    fragmentShader: "varying vec3 vN; varying vec3 vV; uniform vec3 uColor; void main(){ float f = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.4); gl_FragColor = vec4(uColor, f * 0.95); }",
+  }));
+  rim.renderOrder = 11; inner.add(rim);
+  const seam = []; for (let i = 0; i < 160; i++) { const a = i / 160 * Math.PI * 2; seam.push(onShell(Math.cos(a), Math.sin(a), 0)); }
+  inner.add(tube(seam, .013, silver, true, 200));                      // the seam round the middle
+  // the two buttons: a centre seam from the front tip, a curved seam across the body behind them, and a faint tint on each
+  const yB = .12;
+  const surf = (a, yy, k = 1.004) => { const c = Math.sqrt(Math.max(0, 1 - yy * yy)); return onShell(Math.sin(a) * c, yy, Math.cos(a) * c).multiplyScalar(k); };
+  const WY = .64;                                                      // where the scroll wheel sits, in the gap between the two buttons
+  const seamC = [], seamC2 = [];                                       // the centre seam is cut short around the wheel
+  for (let i = 0; i <= 14; i++) seamC.push(surf(0, yB + (WY - .15 - yB) * i / 14));
+  for (let i = 0; i <= 8; i++) seamC2.push(surf(0, WY + .15 + (.985 - WY - .15) * i / 8));
+  const seamX = []; for (let i = 0; i <= 40; i++) seamX.push(surf(-Math.PI / 2 + .05 + (Math.PI - .1) * i / 40, yB));
+  const seamM = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .2, metalness: .2, emissive: 0xffffff, emissiveIntensity: .9 });
+  inner.add(tube(seamC, .015, seamM, false, 60), tube(seamC2, .015, seamM, false, 60), tube(seamX, .015, seamM, false, 60));
+  const patch = (a0, a1, opacity) => {
+    const nx = 14, ny = 16, vs = [], idx = [];
+    for (let j = 0; j <= ny; j++) for (let i = 0; i <= nx; i++) { const p = surf(a0 + (a1 - a0) * i / nx, yB + (.985 - yB) * j / ny, 1.003); vs.push(p.x, p.y, p.z); }
+    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) { const a = j * (nx + 1) + i, b = a + 1, c = a + nx + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.Float32BufferAttribute(vs, 3)); g.setIndex(idx); g.computeVertexNormals();
+    const m = mesh(g, new THREE.MeshPhysicalMaterial({ color: 0x6fd3f7, transparent: true, opacity, roughness: .1, clearcoat: 1, side: THREE.DoubleSide, depthWrite: false })); m.renderOrder = 9; return m;
+  };
+  inner.add(patch(-Math.PI / 2, -.11, .42), patch(.11, Math.PI / 2, .26));
+
+  // circuit board with gold pads, chips, capacitors and screws
+  inner.add(mesh(new THREE.BoxGeometry(.52, .78, .026), std(0x1f6b57, .5, .1), 0, .08, -.055));
+  const pad = new THREE.CylinderGeometry(.012, .012, .006, 10); pad.rotateX(Math.PI / 2); const gold = std(0xf2c75c, .25, .9);
+  for (let i = 0; i < 42; i++) inner.add(mesh(pad, gold, (((i * 37) % 61) / 61 - .5) * .44, .1 + (((i * 53) % 67) / 67 - .5) * .7, -.034));
+  inner.add(mesh(new THREE.BoxGeometry(.19, .14, .045), black, -.09, .18, -.02), mesh(new THREE.BoxGeometry(.12, .09, .035), black, .12, -.12, -.028), mesh(new THREE.BoxGeometry(.09, .06, .03), black, -.12, -.2, -.03));
+  for (let i = 0; i < 6; i++) for (const dy of [-.08, .08]) inner.add(mesh(new THREE.BoxGeometry(.016, .02, .01), silver, -.18 + i * .033, .18 + dy, -.02));
+  const capG = new THREE.CylinderGeometry(.028, .028, .06, 16); capG.rotateX(Math.PI / 2);
+  inner.add(mesh(capG, std(0xcfd6db, .3, .8), .16, .34, -.012), mesh(capG, std(0x20252b, .4, .4), -.17, -.02, -.012), mesh(capG, std(0xcfd6db, .3, .8), .17, -.3, -.012));
+  const screw = new THREE.CylinderGeometry(.032, .032, .02, 16); screw.rotateX(Math.PI / 2);
+  for (const [x, y] of [[-.19, .46], [.19, .46], [-.19, -.28], [.19, -.3]]) inner.add(mesh(screw, silver, x, y, -.03));
+
+  // red scroll wheel with ridges, hub and brackets, at the front
+  // it pokes up through a slot in the shell, half outside and half inside, like a normal mouse
+  const wheel = new THREE.Group(); wheel.position.set(0, WY, surf(0, WY, 1).z - .01); inner.add(wheel);
+  const wg = new THREE.CylinderGeometry(.115, .115, .1, 36); wg.rotateZ(Math.PI / 2); wheel.add(mesh(wg, std(0xe3241b, .35, .05)));
+  for (let i = -2; i <= 2; i++) { const r = new THREE.TorusGeometry(.115, .007, 8, 36); r.rotateY(Math.PI / 2); wheel.add(mesh(r, std(0x7a0f0a, .6), i * .02, 0, 0)); }
+  const hub = new THREE.CylinderGeometry(.04, .04, .18, 20); hub.rotateZ(Math.PI / 2); wheel.add(mesh(hub, black));
+  for (const sx of [-1, 1]) wheel.add(mesh(new THREE.BoxGeometry(.026, .2, .1), silver, sx * .085, 0, -.08));
+  // the two button switches
+  for (const sx of [-1, 1]) inner.add(mesh(new THREE.BoxGeometry(.17, .16, .1), std(0x1c1f25, .45, .3), sx * .2, .4, 0), mesh(new THREE.BoxGeometry(.09, .05, .05), std(sx < 0 ? 0xe3241b : 0x6fd3f7, .4), sx * .2, .47, .05));
+  // no battery: the back of the board carries a flat copper coil on a dark ferrite disc (a wireless-charging look)
+  const ferrite = new THREE.CylinderGeometry(.24, .24, .014, 48); ferrite.rotateX(Math.PI / 2);
+  inner.add(mesh(ferrite, std(0x23262c, .5, .3), 0, -.56, -.05));
+  const copper = std(0xd98a4a, .28, .9);
+  for (let i = 0; i < 5; i++) inner.add(mesh(new THREE.TorusGeometry(.06 + i * .03, .01, 8, 56), copper, 0, -.56, -.032));
+  // wires and the LED
+  const wireM = std(0xf3f6f8, .3, .2);
+  inner.add(tube([V(-.17, .3, .05), V(-.2, .12, .07), V(-.1, 0, .03)], .011, wireM, false, 40), tube([V(.17, .3, .05), V(.2, .12, .07), V(.1, -.02, .03)], .011, wireM, false, 40), tube([V(0, .52, .04), V(0, .3, .08), V(.04, .14, .05)], .009, wireM, false, 40));
+  inner.add(mesh(new THREE.SphereGeometry(.032, 16, 12), glow(0xff3b2f, 2.5), 0, -.08, -.015));
+
+  // underside: four feet, the red-ringed optical sensor and the DPI button
+  const foot = new THREE.BoxGeometry(.18, .07, .016);
+  for (const [x, y, z, r] of [[-.22, .6, -.092, .4], [.22, .6, -.092, -.4], [-.3, -.62, -.092, -.4], [.3, -.62, -.092, .4]]) { const m = mesh(foot, plastic, x, y, z); m.rotation.z = r; inner.add(m); }
+  const sens = new THREE.Group(); sens.position.set(0, .05, -.108); inner.add(sens);
+  const plate = new THREE.CylinderGeometry(.13, .13, .03, 40); plate.rotateX(Math.PI / 2); sens.add(mesh(plate, std(0x0b0d10, .3, .5)));
+  sens.add(mesh(new THREE.TorusGeometry(.095, .013, 12, 48), glow(0xe3241b, 1.6), 0, 0, -.02));
+  const lens = new THREE.CylinderGeometry(.06, .06, .03, 32); lens.rotateX(Math.PI / 2); sens.add(mesh(lens, std(0x0d2a3a, .1, .6), 0, 0, -.025));
+  const dpi = new THREE.CylinderGeometry(.03, .03, .02, 20); dpi.rotateX(Math.PI / 2); inner.add(mesh(dpi, std(0x6fd3f7, .3), 0, .82, -.095));
+
+  // soft shadow that stays flat on the page while the mouse rolls over
+  const sc = document.createElement("canvas"); sc.width = sc.height = 128; const sx2 = sc.getContext("2d"), gr = sx2.createRadialGradient(64, 64, 4, 64, 64, 62);
+  gr.addColorStop(0, "rgba(40,0,0,.4)"); gr.addColorStop(1, "rgba(40,0,0,0)"); sx2.fillStyle = gr; sx2.fillRect(0, 0, 128, 128);
+  root.add(mesh(new THREE.PlaneGeometry(1.9, 3), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }), .08, -.3, -.5));
+
+  try { if (renderer.compileAsync) await renderer.compileAsync(scene, camera); } catch (e) { /* fine: it compiles on first draw instead */ }
+  M3 = { renderer, scene, camera, root, inner, w: 0, h: 0, rad: THREE.MathUtils.degToRad, last: 0, slow: 0, AX: new THREE.Vector3(1, 0, 0), AY: new THREE.Vector3(0, 1, 0), AZ: new THREE.Vector3(0, 0, 1), qa: new THREE.Quaternion(), qb: new THREE.Quaternion() };
+  resize3D();
+}
+function resize3D() {
+  if (!M3) return;
+  const w = innerWidth, h = innerHeight; M3.w = w; M3.h = h;
+  M3.renderer.setSize(w, h, false); M3.camera.aspect = w / h;
+  M3.camera.position.z = (h / 2) / Math.tan(M3.rad(15));             // so that 1 unit in the scene is 1 pixel on screen
+  M3.camera.far = M3.camera.position.z * 10; M3.camera.updateProjectionMatrix();
+}
+function render3D(w3, cx, cy, rot, k, ang, spin, now) {
+  const c = $("#gl3d");
+  if (!M3 || w3 <= .004) { if (c.style.display !== "none") c.style.display = "none"; return; }
+  if (c.style.display !== "block") c.style.display = "block";
+  c.style.opacity = w3.toFixed(3);
+  M3.root.position.set(cx - M3.w / 2, M3.h / 2 - cy, 0);
+  M3.root.rotation.z = -rot * Math.PI / 180;
+  M3.root.scale.setScalar(264 * k * 1.1 / 2);                         // the model is 2 units long
+  // seen from above (front at the top), tipped a little toward us so the hump reads as 3D. It twirls about its own
+  // vertical axis as you scroll (`spin`), and now and then rolls over on its long axis (`ang`) to show the underside
+  M3.inner.quaternion.setFromAxisAngle(M3.AX, .45 + Math.sin(now / 1500) * .05)
+    .multiply(M3.qa.setFromAxisAngle(M3.AZ, spin))
+    .multiply(M3.qb.setFromAxisAngle(M3.AY, ang));
+  M3.scene.environmentRotation.set(Math.sin(now / 6000) * .25, now / 9000 + scrollY * .0007, 0);   // the studio slowly turns, so the highlights travel across the glass
+  const dt = now - (M3.last || now); M3.last = now;                                                  // adaptive quality: if frames get slow, render at 1x
+  M3.slow = dt > 34 ? M3.slow + 1 : Math.max(0, M3.slow - 1);
+  if (M3.slow > 40 && M3.renderer.getPixelRatio() > 1) { M3.renderer.setPixelRatio(1); resize3D(); M3.slow = 0; }
+  M3.renderer.render(M3.scene, M3.camera);
+}
+if (FX) { initGlass(); initMouse3D().catch((e) => console.warn("3D mouse unavailable, using the flat drawing", e)); } else { gfx.remove(); $("#gl3d").remove(); }
+
+// ═══════════════════════════════════════════════════════════════════
 // layout + loop
 // ═══════════════════════════════════════════════════════════════════
+const holdEl = $(".hero-hold");
+// the homepage stays pinned for its own height plus 90% of a screen, even on short windows where it runs a little tall
+function sizeHold() { holdEl.style.height = Math.max(innerHeight * 1.9, hero.offsetHeight + innerHeight * .9) + "px"; }
 function layout() {
-  sizeScene(); introFx();
+  sizeScene(); sizeHold(); introFx(); if (FX) glassLayout();
   dissolves.forEach((d) => d.build());
   contours($("#pd-contour"), "rgb(15 12 12 / .09)", .7, .5); contours($("#foot-contour"), "rgb(15 12 12 / .13)", .35, .6);
   buildBrush(); brushFx();
