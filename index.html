@@ -1100,9 +1100,9 @@ function buildFrames() {
   const H = { cx: gr.left - hr.left + gr.width / 2, cy: gr.top - hr.top + gr.height / 2, k: gA.offsetWidth / 320, rot: -7 };
   const F = (fx, fy, k, rot) => ({ cx: vw * fx, cy: vh * fy, k: kb * k, rot });
   const P = portrait
-    ? { about: F(.5, .8, .78, -5), mouse1: F(.5, .74, 1.2, 0), mouse2: F(.5, .7, 1.25, 0), key: F(.5, .74, 1.05, 0), phone: F(.5, .72, .95, 6), launch: F(.5, .72, .9, -4), proc: F(.5, .8, .7, 4) }
-    : { about: F(.77, .6, .95, -6), mouse1: F(.77, .52, 1.8, 0), mouse2: F(.75, .5, 1.85, 0), key: F(.75, .5, 1.4, 0), phone: F(.75, .5, 1.05, 6), launch: F(.75, .5, 1, -4), proc: F(.89, .2, .8, 5) };
-  KEYCLICK_Y = s2 + .1 * vh;                                      // scrolling down past here clicks the key once
+    ? { about: F(.5, .8, .78, -5), mouse1: F(.5, .74, .9, 0), mouse2: F(.5, .7, .94, 0), key: F(.5, .74, 1.05, 0), phone: F(.5, .72, .95, 6), launch: F(.5, .72, .9, -4), proc: F(.5, .8, .7, 4) }
+    : { about: F(.77, .6, .95, -6), mouse1: F(.77, .52, 1.3, 0), mouse2: F(.75, .5, 1.34, 0), key: F(.75, .5, 1.4, 0), phone: F(.75, .5, 1.05, 6), launch: F(.75, .5, 1, -4), proc: F(.89, .2, .8, 5) };
+  KEYCLICK_Y = s2 - .15 * vh;                                     // scrolling down past here clicks the key once
   let prev = { u: 0, xo: 0, rm: 0, en: 0, ps: 0, fo: 0, ...H };
   const keys = [];
   const add = (y, o) => { prev = { ...prev, ...o, y: Math.max(y, keys.length ? keys[keys.length - 1].y + 1 : -Infinity) }; keys.push(prev); };
@@ -1124,11 +1124,11 @@ function buildFrames() {
   add(hT, {}); add(aT - vh, {});                                      // the homepage holds still
   add(aT + .05 * vh, { u: 1, ...P.about });                           // window becomes three people
   // as the cards scroll up the people drift to the empty space at the top, then the middle one is crossed out and removed
-  add(aT + .45 * vh, { cy: portrait ? vh * .8 : vh * .34 }); add(aT + .8 * vh, { xo: 1, cy: portrait ? vh * .8 : vh * .22 }); add(aT + 1.05 * vh, { rm: 1 });
-  add(wT - .3 * vh, { u: 2, ...P.mouse1, cy: portrait ? P.mouse1.cy : vh * .24 });   // the two founders merge into a mouse up in the clear space...
-  add(wT + .15 * vh, { ...P.mouse1 });                                // ...then it settles into place
+  add(aT + .45 * vh, { cy: portrait ? vh * .8 : vh * .34 }); add(aT + .7 * vh, { xo: 1, cy: portrait ? vh * .8 : vh * .22 }); add(aT + .92 * vh, { rm: 1 });
+  add(wT - .5 * vh, { u: 2, ...P.mouse1, cy: portrait ? P.mouse1.cy : vh * .24 });   // the two founders merge into a mouse up in the clear space...
+  add(wT - .1 * vh, { ...P.mouse1 });                                 // ...then it settles into place
   add(s1 + .35 * vh, { ...P.mouse2 });
-  add(s2 + .05 * vh, { u: 3, ...P.key });                             // mouse becomes a mechanical key
+  add(s2 - .25 * vh, { u: 3, ...P.key });                             // mouse becomes a mechanical key
   add(s2 + .6 * vh, {});
   add(s3 + .05 * vh, { u: 4, ...P.phone, ps: 0 });                    // key becomes a phone
   add(s3 + .45 * vh, {});
@@ -1219,6 +1219,9 @@ function glassLayout() {
 // inside, and an underside with feet, a red-ringed sensor and a battery cover, so it can roll over in 3D
 // ═══════════════════════════════════════════════════════════════════
 let M3 = null;
+// camera angle on the mouse: TILT is how far it's laid back from a straight top-down view (about 46 degrees = a three-quarter view),
+// YAW is the resting heading, so when it stops spinning it sits nose-left like the reference photo
+const MOUSE_TILT = -.8, MOUSE_YAW = 1.7;   // negative tilt = we look down on it from the front, so the hump is up and the flat belly sits underneath
 async function initMouse3D() {
   const THREE = await import("three");
   const renderer = new THREE.WebGLRenderer({ canvas: $("#gl3d"), alpha: true, antialias: true });
@@ -1354,8 +1357,8 @@ function render3D(w3, cx, cy, rot, k, ang, spin, now) {
   M3.root.scale.setScalar(264 * k * 1.1 / 2);                         // the model is 2 units long
   // seen from above (front at the top), tipped a little toward us so the hump reads as 3D. It twirls about its own
   // vertical axis as you scroll (`spin`), and now and then rolls over on its long axis (`ang`) to show the underside
-  M3.inner.quaternion.setFromAxisAngle(M3.AX, .45 + Math.sin(now / 1500) * .05)
-    .multiply(M3.qa.setFromAxisAngle(M3.AZ, spin))
+  M3.inner.quaternion.setFromAxisAngle(M3.AX, MOUSE_TILT + Math.sin(now / 1500) * .03)
+    .multiply(M3.qa.setFromAxisAngle(M3.AZ, spin + MOUSE_YAW))
     .multiply(M3.qb.setFromAxisAngle(M3.AY, ang));
   M3.scene.environmentRotation.set(Math.sin(now / 6000) * .25, now / 9000 + scrollY * .0007, 0);   // the studio slowly turns, so the highlights travel across the glass
   const dt = now - (M3.last || now); M3.last = now;                                                  // adaptive quality: if frames get slow, render at 1x
