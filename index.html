@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>VelocityCore — Websites for Local Businesses</title>
+<title>VelocityCore</title>
 <meta name="description" content="VelocityCore designs and builds distinctive websites for local businesses. Design. Develop. Deliver. Meet the team and get in touch.">
 <meta name="theme-color" content="#e3241b">
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
@@ -112,7 +112,7 @@ html.no-js .intro, html.no-js .skip { display:none; }
 .hero { position:sticky; top:0; min-height:100svh; background:var(--red); overflow:hidden; isolation:isolate; display:flex; flex-direction:column; }
 html.no-js .hero-hold { margin-top:0; height:auto; }
 html.no-intro .intro { display:none; }                       /* the version without the two teens: start straight on the homepage */
-html.no-intro .hero-hold { margin-top:0; }
+html.no-intro .hero-hold { margin-top:0; height:auto; }       /* no intro scene any more, so no extra pinned scroll at the top either */
 html.no-js .hero { position:relative; }
 
 /* the glass companion: one object that follows you down the page and changes shape */
@@ -275,6 +275,32 @@ main { position:relative; }
   .foot-head { align-items:flex-start; text-align:left; font-size:clamp(3rem, 13vw, 5rem); } .foot-head .tr { justify-content:flex-start; }
   .foot-form { padding:1.5rem; gap:.9rem; } .fld { gap:.4rem; } .fld textarea { min-height:7rem; } .fld input, .fld textarea { padding:.8rem; } .row2 { gap:.9rem; }
   .foot-nav a { font-size:30px; }
+}
+
+/* ═════════ phones and tablets ═════════ */
+a, button { -webkit-tap-highlight-color:transparent; }
+.mast { padding-top:max(1.5rem, calc(env(safe-area-inset-top) + .75rem)); }
+@media (max-width:1023px) {
+  .burger { padding:1.1rem .85rem; margin:-.6rem -.85rem -.6rem 0; }       /* 44px tap target without making the header taller */
+  .sheet { padding-top:max(1.5rem, calc(env(safe-area-inset-top) + .75rem)); padding-bottom:max(1.5rem, env(safe-area-inset-bottom)); }
+  .sheet-close { width:2.75rem; height:2.75rem; }
+  .tlink { padding-block:.55rem .2rem; }
+  .fld input, .fld textarea { font-size:16px; }                            /* under 16px, iPhones zoom the page when a field is tapped */
+  .fld label { font-size:11px; }
+  .foot-social { flex-wrap:wrap; gap:.25rem 1.6rem; }
+  .foot-social a { display:inline-block; padding:.6rem 0; }
+  .foot-nav a { padding-block:.2rem; }
+  .footer { padding-bottom:env(safe-area-inset-bottom); }
+}
+@media (max-width:639px) { .glass { top:35%; width:min(44vw, 13rem); } }     /* sits under the big word instead of on top of it */
+@media (max-width:479px) {
+  .ticker { display:none; }                                                /* it collides with "scroll to discover" on narrow phones */
+  .hero-body { padding-bottom:4rem; }
+  .pcard { min-height:0; }
+}
+@media (hover:none) {
+  .cta:hover .flood { transform:scaleX(0); }                               /* no sticky hover fill after a tap */
+  .cta:hover .lbl { color:var(--sky); } .cta:hover .arrow { stroke:var(--sky); transform:none; }
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -903,6 +929,13 @@ function introFx() {
 // browser window > three people (the middle one crossed out) > mouse > mechanical key > phone > the contact page
 // ═══════════════════════════════════════════════════════════════════
 const FX = !REDUCED;
+const COARSE = matchMedia("(pointer: coarse)").matches;              // phones and tablets
+// On phones, innerHeight changes as the browser's address bar slides away. 100vh doesn't, so the companion is sized to that
+// instead (a hidden probe measures it), and height-only resizes on touch devices are ignored further down.
+const vhProbe = document.createElement("div");
+vhProbe.style.cssText = "position:fixed;left:0;top:0;width:0;height:100vh;pointer-events:none;visibility:hidden";
+document.body.append(vhProbe);
+let GVH = innerHeight;
 // "mouse": after the homepage, one calm 3D mouse follows you down the page.
 // "shapes": the busier version (window > three people > mouse > key > phone > contact page). It stays in the file;
 // change the word below to switch back. The busy version is drawn smaller (COMP_SIZE).
@@ -1092,7 +1125,7 @@ function outline(a) {
 // xo = the cross over the middle person, rm = middle person removed, en = phone enlarging into the contact page,
 // ps = how far the phone's screen has scrolled
 function buildFrames() {
-  const vw = innerWidth, vh = innerHeight, portrait = vw < vh * .9 || vw < 700;
+  const vw = innerWidth, vh = GVH, portrait = vw < vh * .9 || vw < 700;
   const kb = portrait ? vw / 430 : Math.min(vw / 1300, vh / 700);
   const top = (el) => el.getBoundingClientRect().top + scrollY;
   const hT = top($(".hero-hold")), aT = top($("#about")), wT = top($("#what")), s1 = top($("#svc-1")), s2 = top($("#svc-2")), s3 = top($("#svc-3")), s4 = top($("#svc-4")), pT = top($("#process")), cT = top($("#contact"));
@@ -1125,8 +1158,9 @@ function buildFrames() {
   add(aT + .05 * vh, { u: 1, ...P.about });                           // window becomes three people
   // as the cards scroll up the people drift to the empty space at the top, then the middle one is crossed out and removed
   add(aT + .45 * vh, { cy: portrait ? vh * .8 : vh * .34 }); add(aT + .7 * vh, { xo: 1, cy: portrait ? vh * .8 : vh * .22 }); add(aT + .92 * vh, { rm: 1 });
-  add(wT - .5 * vh, { u: 2, ...P.mouse1, cy: portrait ? P.mouse1.cy : vh * .24 });   // the two founders merge into a mouse up in the clear space...
-  add(wT - .1 * vh, { ...P.mouse1 });                                 // ...then it settles into place
+  const mouseAt = Math.max(wT - .5 * vh, aT + 1.22 * vh);            // never closer than .3 of a screen after the cross-out, so narrow windows still get a smooth morph
+  add(mouseAt, { u: 2, ...P.mouse1, cy: portrait ? P.mouse1.cy : vh * .24 });   // the two founders merge into a mouse up in the clear space...
+  add(Math.max(wT - .1 * vh, mouseAt + .25 * vh), { ...P.mouse1 });   // ...then it settles into place
   add(s1 + .35 * vh, { ...P.mouse2 });
   add(s2 - .25 * vh, { u: 3, ...P.key });                             // mouse becomes a mechanical key
   add(s2 + .6 * vh, {});
@@ -1148,7 +1182,7 @@ function frameAt(Y) {
 }
 
 function renderGlass(now) {
-  const vw = innerWidth, vh = innerHeight, Y = scrollY, s = frameAt(Y);
+  const vw = innerWidth, vh = GVH, Y = scrollY, s = frameAt(Y);
   if (!s) return;
   const ov = clamp((Y - (GFRAMES[0].y - .45 * vh)) / (.1 * vh));      // only once the homepage is showing
   const op = ov * (1 - clamp((s.en - .86) / .14)) * (1 - s.fo);                    // once the phone has filled the window it melts away into the real contact page
@@ -1169,9 +1203,10 @@ function renderGlass(now) {
   mtop.style.display = sx >= 0 ? "" : "none"; mbot.style.display = sx >= 0 ? "none" : "";
   if (en > 0) { cx += (vw / 2 - cx) * en; cy += (vh / 2 - cy) * en; rot *= 1 - en; k = Math.exp(Math.log(k) + (Math.log(KEND) - Math.log(k)) * en); }
   gobj.setAttribute("transform", `translate(${cx.toFixed(1)} ${cy.toFixed(1)}) rotate(${rot.toFixed(2)}) scale(${(k * sx).toFixed(4)} ${k.toFixed(4)})`);
-  shadowG.setAttribute("filter", en > .02 ? "none" : "url(#gsh)");
+  shadowG.setAttribute("filter", en > .02 || COARSE ? "none" : "url(#gsh)");   // the blurred drop shadow is costly to redraw every frame on phones
   // while it's a mouse, swap the flat drawing for the real 3D model (if the 3D library loaded)
-  const w3 = !M3 ? 0 : COMPANION === "mouse" ? clamp((s.u - .6) / .4) : clamp((s.u - 1.7) / .3) * clamp((2.9 - s.u) / .3);
+  // the 3D mouse fades in while the people are still merging (u 1.45 to 1.85), so the flat drawing never gets a moment on its own
+  const w3 = !M3 ? 0 : COMPANION === "mouse" ? clamp((s.u - .6) / .4) : clamp((s.u - 1.45) / .4) * clamp((2.9 - s.u) / .3);
   gobj.style.opacity = (1 - w3).toFixed(3);
   // twirl: scrolling turns the mouse (about 1 turn per 600px); when you stop it eases to the nearest turn, so it rests upright
   const sdt = Math.min(now - spinNow, 250); spinNow = now;
@@ -1203,6 +1238,7 @@ function renderGlass(now) {
 
   // the details on top of each shape fade in and out with it
   for (let i = 0; i < 5; i++) dts[i].style.opacity = (COMPANION === "mouse" ? (i === 0 ? 1 - clamp(s.u) : i === 2 ? clamp(s.u) : 0) : Math.pow(clamp(1 - Math.abs(s.u - i)), 1.4)).toFixed(3);
+  if (M3) dts[2].style.opacity = "0";                                  // the flat circuit-board mouse is only a fallback for when 3D can't load
   const xo = clamp(s.xo), xs = Math.max(0, 1 - s.rm);
   xpaths.forEach((p) => p.setAttribute("stroke-dashoffset", (1 - xo).toFixed(3)));
   xg.setAttribute("transform", `translate(0 4) scale(${xs.toFixed(3)}) translate(0 -4)`);
@@ -1210,7 +1246,8 @@ function renderGlass(now) {
 }
 function glassLoop(now) { renderGlass(now); requestAnimationFrame(glassLoop); }
 function glassLayout() {
-  gfx.setAttribute("viewBox", `0 0 ${innerWidth} ${innerHeight}`);
+  GVH = vhProbe.offsetHeight || innerHeight;
+  gfx.setAttribute("viewBox", `0 0 ${innerWidth} ${GVH}`);
   const r = buildFrames(); GFRAMES = r.keys; KEND = r.kEnd; resize3D();
 }
 
@@ -1258,7 +1295,8 @@ async function initMouse3D() {
     const f = Math.pow(Math.pow(Math.abs(x), PN) + Math.pow(Math.abs(y), PN) + Math.pow(Math.abs(z), PN), 1 / PN) || 1;
     x /= f; y /= f; z /= f; return V(x * hw(y), y, z * (z >= 0 ? htop(y) : HBOT));
   };
-  const sg = new THREE.SphereGeometry(1, 96, 64), pos = sg.attributes.position;
+  const small = innerWidth < 800;                                      // lighter mesh on phones
+  const sg = new THREE.SphereGeometry(1, small ? 56 : 96, small ? 36 : 64), pos = sg.attributes.position;
   for (let i = 0; i < pos.count; i++) { const p = onShell(pos.getX(i), pos.getY(i), pos.getZ(i)); pos.setXYZ(i, p.x, p.y, p.z); }
   sg.computeVertexNormals();
 
@@ -1342,7 +1380,7 @@ async function initMouse3D() {
 }
 function resize3D() {
   if (!M3) return;
-  const w = innerWidth, h = innerHeight; M3.w = w; M3.h = h;
+  const w = innerWidth, h = GVH; M3.w = w; M3.h = h;
   M3.renderer.setSize(w, h, false); M3.camera.aspect = w / h;
   M3.camera.position.z = (h / 2) / Math.tan(M3.rad(15));             // so that 1 unit in the scene is 1 pixel on screen
   M3.camera.far = M3.camera.position.z * 10; M3.camera.updateProjectionMatrix();
@@ -1373,14 +1411,23 @@ if (FX) { initGlass(); initMouse3D().catch((e) => console.warn("3D mouse unavail
 // ═══════════════════════════════════════════════════════════════════
 const holdEl = $(".hero-hold");
 // the homepage stays pinned for its own height plus 90% of a screen, even on short windows where it runs a little tall
-function sizeHold() { holdEl.style.height = Math.max(innerHeight * 1.9, hero.offsetHeight + innerHeight * .9) + "px"; }
+function sizeHold() {
+  if (!intro.offsetHeight) { holdEl.style.height = ""; return; }      // no intro: the homepage scrolls away normally
+  holdEl.style.height = Math.max(innerHeight * 1.9, hero.offsetHeight + innerHeight * .9) + "px";
+}
 function layout() {
   sizeScene(); sizeHold(); introFx(); if (FX) glassLayout();
   dissolves.forEach((d) => d.build());
   contours($("#pd-contour"), "rgb(15 12 12 / .09)", .7, .5); contours($("#foot-contour"), "rgb(15 12 12 / .13)", .35, .6);
   buildBrush(); brushFx();
 }
-let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(layout, 150); });
+// on phones the address bar sliding away fires "resize" while you scroll; rebuilding everything then makes the page jump and flicker,
+// so touch devices only re-layout when the width changes (rotation, split screen)
+let rz, lastW = innerWidth;
+addEventListener("resize", () => {
+  if (COARSE && innerWidth === lastW) return;
+  lastW = innerWidth; clearTimeout(rz); rz = setTimeout(layout, 150);
+});
 document.fonts && document.fonts.ready.then(layout);
 // layout shifts as reveals/fonts settle; rebuild once things have had time to land
 addEventListener("load", () => setTimeout(layout, 600));
